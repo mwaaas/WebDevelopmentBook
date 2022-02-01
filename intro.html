@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to your Jupyter Book &#8212; Web Development from Scratch</title>
+    <title>Welcome to your Web development from scratch &#8212; Web Development from Scratch</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -51,7 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="Book review project specification" href="book_review_project.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -91,11 +93,31 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 current">
   <a class="reference internal" href="#">
-   Welcome to your Jupyter Book
+   Welcome to your Web development from scratch
   </a>
  </li>
 </ul>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="book_review_project.html">
+   Book review project specification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="creating_user.html">
+   Creating User
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hiding.html">
+   Hide or remove content
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="test.html">
+   ipymonaco
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="markdown.html">
    Markdown Files
@@ -195,7 +217,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Welcome to your Jupyter Book</h1>
+                <h1>Welcome to your Web development from scratch</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -206,19 +228,19 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="welcome-to-your-web-development-from-scratch">
+<h1>Welcome to your Web development from scratch<a class="headerlink" href="#welcome-to-your-web-development-from-scratch" title="Permalink to this headline">¶</a></h1>
+<p>In this book we will create a book review project from scratch using python, html and css only.
+In the process you will learn fundamental principals of web development.
+Once we have a grasp of the basic principles of web development we will then  create the same project
+book review with a database say sqlite but the concept will work with any database.</p>
+<p>Later will implement the same project with a framework like Django to understand why we need a framework and also to understand django.</p>
+<p>After implementing in Django will then dive into single page apps where we will implement the project in React.</p>
+<p>We will then do the same project with Sprint Java, Sprint Kotlin, Kotlin and Golang just to understand other frameworks.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Here is a note!</p>
+<p>Assumption that you already know how to code with python</p>
 </div>
-<p>And here is a code block:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">mc</span><span class="o">^</span><span class="mi">2</span>
-</pre></div>
-</div>
-<p>Check out the content pages bundled with this sample book to see more.</p>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -248,10 +270,10 @@ structured.</p>
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="markdown.html" title="next page">
+    <a class='right-next' id="next-link" href="book_review_project.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Markdown Files</p>
+        <p class="prev-next-title">Book review project specification</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
