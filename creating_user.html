@@ -40,6 +40,7 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/custom.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -53,7 +54,6 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Book review project specification" href="book_review_project.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -97,19 +97,6 @@
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="book_review_project.html">
-   Book review project specification
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Creating User
-  </a>
- </li>
-</ul>
-
     </div>
 </nav> <!-- To handle the deprecated key -->
 
@@ -237,10 +224,6 @@ Once done copy the file into your local machine. (Create a folder for this proje
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipymonaco</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cwd&quot;</span><span class="p">)</span>
 
 <span class="n">user_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../BookReviewFromScratch/without_database/user.py&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
 <span class="n">submitted_code</span> <span class="o">=</span> <span class="n">user_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -258,25 +241,43 @@ Once done copy the file into your local machine. (Create a folder for this proje
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;submitted_code: </span><span class="si">{</span><span class="n">submitted_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
 <span class="n">monaco_editor</span><span class="o">.</span><span class="n">onDidChangeModelContent</span><span class="p">(</span><span class="n">getData</span><span class="p">)</span> 
-<span class="n">display</span><span class="p">(</span><span class="n">monaco_editor</span><span class="p">,</span> <span class="n">text_widget</span><span class="p">)</span>
+
+
+<span class="n">debug_view</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;border&#39;</span><span class="p">:</span> <span class="s1">&#39;1px solid black&#39;</span><span class="p">})</span>
+
+<span class="nd">@debug_view</span><span class="o">.</span><span class="n">capture</span><span class="p">(</span><span class="n">clear_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">bad_callback</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This is about to explode&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">0.0</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+    <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;submit_user&quot;</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;mwaside&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;click me to raise an exception&#39;</span><span class="p">,</span>
+    <span class="n">layout</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;300px&#39;</span><span class="p">},</span>
+    <span class="n">Id</span><span class="o">=</span><span class="s2">&quot;user_button&quot;</span>
+<span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">bad_callback</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">add_class</span><span class="p">(</span><span class="s2">&quot;user_submit&quot;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">monaco_editor</span><span class="p">,</span> <span class="n">text_widget</span><span class="p">,</span> <span class="n">button</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cwd
-</pre></div>
-</div>
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "1ce7913d19bc46638faed6277a37c3b0"}
+{"version_major": 2, "version_minor": 0, "model_id": "51f670d210e14242aa16fcb83a950b40"}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "b240f36953be494faf8b115ca5a27235"}
+{"version_major": 2, "version_minor": 0, "model_id": "27fcc69134554f8e9697dc1f9df580b8"}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "submit_user"}
 </script></div>
 </div>
 </div>
 
 
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"73b8a862f97f4a23abf03f7491254c6b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8cd90dceac714f6299b48e0046ec12c1": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "b240f36953be494faf8b115ca5a27235": {"model_name": "LabelModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "LabelModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "LabelView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_73b8a862f97f4a23abf03f7491254c6b", "placeholder": "\u200b", "style": "IPY_MODEL_8cd90dceac714f6299b48e0046ec12c1", "value": "print('hello world')"}}, "c64d7f8cf36f479ca9b03ea6e49418bc": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1ce7913d19bc46638faed6277a37c3b0": {"model_name": "EditorModel", "model_module": "ipymonaco", "model_module_version": "^0.0.23", "state": {"_dom_classes": [], "_keydown_handlers_present": false, "_keyup_handlers_present": false, "_model_module": "ipymonaco", "_model_module_version": "^0.0.23", "_model_name": "EditorModel", "_view_count": null, "_view_module": "ipymonaco", "_view_module_version": "^0.0.23", "_view_name": "EditorView", "diffvalue": "", "height": 300, "language": "python", "layout": "IPY_MODEL_c64d7f8cf36f479ca9b03ea6e49418bc", "readOnly": false, "renderSideBySide": true, "rulers": [], "tabSize": 4, "theme": "vs", "useTabStops": false, "value": "# This will act as our store for a start we will later convert it to something that can be persisted. \n# the structure of this should end up with something like this \n# {\"john\": {\"password\": \"mypassword\", \"dateOfBirth\": \"30/12/1980\"}}\nusers = {}\n\n\n\n\n# exception throw when username does not exist \nclass InvalidUsername(Exception):\n    pass \n\n# exception throw when password is invalid\nclass InvalidPassword(Exception):\n    pass \n\n# exception throw when registering a user who already exist\nclass UserAlreadyExist(Exception):\n    pass \n\n\n# exception thrown when registering a user with password missmatch i.e password 1 and 2 are not same \nclass PasswordMissmatch(Exception):\n    pass \n\n\nclass InvalidDateOfBirth(Exception):\n    pass \n\n\ndef login(username: string, password: string) -> {}:\n    \"\"\" \n    Returns user details if user exist else returns None\n    \"\"\"\n    pass\n\n\ndef register(username: string, password: string, password2: string, dateOfBirth: string):\n    \"\"\"\n    if user exist return error saying user already exist \n\n    if password1 and password2 are equal and username does not exist it will create \n    a new user on our user dictionary and return user. \n\n    if password1 and password2 is not equal raise an error.  \n    \"\"\"\n    pass\n\nif __name__ == '__main__':\n    login(\"foo\", \"mysecret_password\")", "wordWrap": "off", "wordWrapColumn": 80}}}, "version_major": 2, "version_minor": 0}
+{"state": {"ead5290e159c4391ab68a1f902f0977c": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2af7cc9656594ec89316fe3ec3496ede": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "27fcc69134554f8e9697dc1f9df580b8": {"model_name": "LabelModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "LabelModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "LabelView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_ead5290e159c4391ab68a1f902f0977c", "placeholder": "\u200b", "style": "IPY_MODEL_2af7cc9656594ec89316fe3ec3496ede", "value": "print('hello world')"}}, "29e188b5430b4d29bb7c4eb9ac710b02": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "51f670d210e14242aa16fcb83a950b40": {"model_name": "EditorModel", "model_module": "ipymonaco", "model_module_version": "^0.0.23", "state": {"_dom_classes": [], "_keydown_handlers_present": false, "_keyup_handlers_present": false, "_model_module": "ipymonaco", "_model_module_version": "^0.0.23", "_model_name": "EditorModel", "_view_count": null, "_view_module": "ipymonaco", "_view_module_version": "^0.0.23", "_view_name": "EditorView", "diffvalue": "", "height": 300, "language": "python", "layout": "IPY_MODEL_29e188b5430b4d29bb7c4eb9ac710b02", "readOnly": false, "renderSideBySide": true, "rulers": [], "tabSize": 4, "theme": "vs", "useTabStops": false, "value": "# This will act as our store for a start we will later convert it to something that can be persisted. \n# the structure of this should end up with something like this \n# {\"john\": {\"password\": \"mypassword\", \"dateOfBirth\": \"30/12/1980\"}}\nusers = {}\n\n\n\n\n# exception throw when username does not exist \nclass InvalidUsername(Exception):\n    pass \n\n# exception throw when password is invalid\nclass InvalidPassword(Exception):\n    pass \n\n# exception throw when registering a user who already exist\nclass UserAlreadyExist(Exception):\n    pass \n\n\n# exception thrown when registering a user with password missmatch i.e password 1 and 2 are not same \nclass PasswordMissmatch(Exception):\n    pass \n\n\nclass InvalidDateOfBirth(Exception):\n    pass \n\n\ndef login(username: string, password: string) -> {}:\n    \"\"\" \n    Returns user details if user exist else returns None\n    \"\"\"\n    pass\n\n\ndef register(username: string, password: string, password2: string, dateOfBirth: string):\n    \"\"\"\n    if user exist return error saying user already exist \n\n    if password1 and password2 are equal and username does not exist it will create \n    a new user on our user dictionary and return user. \n\n    if password1 and password2 is not equal raise an error.  \n    \"\"\"\n    pass\n\nif __name__ == '__main__':\n    login(\"foo\", \"mysecret_password\")", "wordWrap": "off", "wordWrapColumn": 80}}, "75a032f894224ca9a37fe90e35470429": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "63a59eb5e2ff455e89521ed5100c0531": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_75a032f894224ca9a37fe90e35470429", "msg_id": "", "outputs": []}}, "3e4bae4054dd400f9a3d2d5f2af8c817": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": "300px"}}, "848f6bf5d51448249e2f3e4587b9df80": {"model_name": "ButtonStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ButtonStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "button_color": null, "font_weight": ""}}, "submit_user": {"model_name": "ButtonModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["user_submit"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ButtonModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ButtonView", "button_style": "", "description": "click me to raise an exception", "disabled": false, "icon": "", "layout": "IPY_MODEL_3e4bae4054dd400f9a3d2d5f2af8c817", "style": "IPY_MODEL_848f6bf5d51448249e2f3e4587b9df80", "tooltip": ""}}}, "version_major": 2, "version_minor": 0}
 </script>
 
 
@@ -304,14 +305,7 @@ Once done copy the file into your local machine. (Create a folder for this proje
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="book_review_project.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Book review project specification</p>
-        </div>
-    </a>
+<div class='prev-next-area'>
 </div>
             
         </div>
