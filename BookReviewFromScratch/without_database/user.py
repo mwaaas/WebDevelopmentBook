@@ -29,7 +29,7 @@ class InvalidDateOfBirth(Exception):
     pass 
 
 
-def login(username: str, password: str) -> {}:      
+def login(username: str, password: str) -> dict:
   """ 
   Returns user details if user exist else returns None
   """
