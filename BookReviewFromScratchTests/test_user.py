@@ -55,7 +55,7 @@ class TestUserArePersisted(TestCase):
         password, dateOfBirth = "bar", "30/12/1970"
         results = subprocess.run([
             "python", 
-            "BookReviewFromScratch/without_database/user.py", 
+            "BookReviewFromScratch/manage.py",
             "user_register", 
             f"--username={random_username}",
             f"--password={password}", 
@@ -80,7 +80,7 @@ class TestUserArePersisted(TestCase):
         # test login with invalid passowrd fails
         results = subprocess.run([
                     "python",
-                    "BookReviewFromScratch/without_database/user.py",
+                    "BookReviewFromScratch/manage.py",
                     "user_login",
                     f"--username={random_username}",
                     f"--password={password}_invalid_password",
@@ -90,7 +90,7 @@ class TestUserArePersisted(TestCase):
         # test login with valid password
         results = subprocess.run([
                     "python",
-                    "BookReviewFromScratch/without_database/user.py",
+                    "BookReviewFromScratch/manage.py",
                     "user_login",
                     f"--username={random_username}",
                     f"--password={password}",
